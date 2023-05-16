@@ -4,6 +4,7 @@ import genres from 'constants/genres.json'
 import { CardsProps } from './types';
 import { ImageContainer, InfoShow, ShowBox, ShowCalification, ShowLabel, ShowLabelTitle, ShowThumb, ShowTitle } from './styles';
 import { Tag } from '../tag';
+import { getMovieInfo } from 'services';
 
 const Card: React.FC<CardsProps> = (props) => {
 
@@ -29,8 +30,18 @@ const Card: React.FC<CardsProps> = (props) => {
         }
     };
 
+    const getMovieData = async () => {
+        await getMovieInfo(props.movieId).then((response) => {
+            if (response && response.data) {
+                console.log(response.data);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     return (
-        <ShowBox>
+        <ShowBox onClick={() => {getMovieData()}}>
             <ImageContainer>
                 <ShowThumb src={posterAvatar} />
             </ImageContainer>

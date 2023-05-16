@@ -29,7 +29,7 @@ const Home = () => {
     return (
         <div>
             {movies.map((movie) => {
-                return <Card path={movie.poster_path} title={movie.title} vote_average={movie.vote_average} genreId={movie.genre_ids[0]} />;
+                return <Card path={movie.poster_path} title={movie.title} vote_average={movie.vote_average} genreId={movie.genre_ids[0]} movieId={movie.id.toString()} />;
             })}
         </div>
     )
