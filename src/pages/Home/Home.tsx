@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 /* Importing Components */
-import Card from 'components/card/Card';
-import { movies } from 'constants/moviesMock';
+import Carrousel from 'components/carrousel/Carrousel';
+import { getNowPlaying, getPopular, getTopRated, getUpcoming } from 'services';
+import { CardsProps } from 'components/card/types';
 /*
     #   #  #       #   #   #
     #   #   #  #  #    #   #
@@ -9,28 +10,58 @@ import { movies } from 'constants/moviesMock';
 */
 
 const Home = () => {
-    const avatar = movies[0];
-    const {
-        title: titleAvatar,
-        vote_average: voteAverageAvatar,
-        poster_path: pathAvatar,
-        genre_ids: [genreAvatar]
-    } = avatar;
+    const [popular, setPopular] = React.useState<Array<CardsProps>>([]);
+    const [topRated, setTopRated] = React.useState<Array<CardsProps>>([]);
+    const [nowPlaying, setNowPlaying] = React.useState<Array<CardsProps>>([]);
+    const [upcoming, setUpcoming] = React.useState<Array<CardsProps>>([]);
 
+    function movieList (data:any): Array<CardsProps> {
+        let res = data.slice(0, 10).map((movie: any) => {
+            let card = {
+                title: movie['title'],
+                vote_average: movie.vote_average,
+                path: movie.poster_path,
+                genreIds: movie.genre_ids,
+                movieId: movie.id.toString()
+            }
+            return card;
+        })
+        return res;
+    }
 
-    const winnie = movies[1];
-    const {
-        title: titleWinnie,
-        vote_average: voteAverageWinnie,
-        poster_path: pathWinnie,
-        genre_ids: [genreWinnie]
-    } = winnie;
+    useEffect(() => {
+        async function getPopularMovies() {
+            const response = await getPopular();
+            let list = movieList(response.data.results);
+            setPopular(list);
+        };
+        async function getTopRatedMovies() {
+            const response = await getTopRated();
+            let list = movieList(response.data.results);
+            setTopRated(list);
+        };
+        async function getNowPlayingMovies() {
+            const response = await getNowPlaying();
+            let list = movieList(response.data.results);
+            setNowPlaying(list);
+        };
+        async function getUpcomingMovies() {
+            const response = await getUpcoming();
+            let list = movieList(response.data.results);
+            setUpcoming(list);
+        };
+        getPopularMovies();
+        getTopRatedMovies();
+        getNowPlayingMovies();
+        getUpcomingMovies();
+      }, []);
 
     return (
         <div>
-            {movies.map((movie) => {
-                return <Card path={movie.poster_path} title={movie.title} vote_average={movie.vote_average} genreId={movie.genre_ids[0]} movieId={movie.id.toString()} />;
-            })}
+            <Carrousel title="POPULAR" movies={popular} link='/popular' />
+            <Carrousel title="TOP RATED" movies={topRated} link='/top-rated' />
+            <Carrousel title="NOW PLAYING" movies={nowPlaying} link='/now-playing' />
+            <Carrousel title="UPCOMING" movies={upcoming} link='/upcoming' />
         </div>
     )
 }

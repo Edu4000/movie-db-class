@@ -1,7 +1,9 @@
 export const ROUTES = {
     HOME: '/',
-    MOVIES: '/movies',
-    ABOUT: '/about',
-    SERIES: '/series',
-    LOGIN: '/login',
+    POPULAR: '/popular',
+    TOP_RATED: '/top-rated',
+    NOW_PLAYING: '/now-playing',
+    MY_FAVORITES: '/my-favorites',
+    MOVIE: '/movie/:id',
+    NOT_FOUND: '/not-found/:id',
 };

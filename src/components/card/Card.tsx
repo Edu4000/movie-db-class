@@ -2,11 +2,12 @@ import React from 'react'
 import { IMAGE_SOURCE, movies } from 'constants/moviesMock'
 import genres from 'constants/genres.json'
 import { CardsProps } from './types';
-import { ImageContainer, InfoShow, ShowBox, ShowCalification, ShowLabel, ShowLabelTitle, ShowThumb, ShowTitle } from './styles';
+import { ImageContainer, InfoShow, ShowBox, ShowCalification, ShowLabelTitle, ShowThumb, ShowTitle } from './styles';
 import { Tag } from '../tag';
-import { getMovieInfo } from 'services';
+import { useNavigate } from 'react-router-dom';
 
 const Card: React.FC<CardsProps> = (props) => {
+    const navigate = useNavigate();
 
     const posterAvatar = IMAGE_SOURCE + props.path;
 
@@ -30,24 +31,16 @@ const Card: React.FC<CardsProps> = (props) => {
         }
     };
 
-    const getMovieData = async () => {
-        await getMovieInfo(props.movieId).then((response) => {
-            if (response && response.data) {
-                console.log(response.data);
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
     return (
-        <ShowBox onClick={() => {getMovieData()}}>
+        <ShowBox onClick={() => {
+            navigate(`/movie/${props.movieId}`);
+            }}>
             <ImageContainer>
                 <ShowThumb src={posterAvatar} />
             </ImageContainer>
             <InfoShow>
                 <ShowTitle>
-                    <Tag color={getColor(props.vote_average)} genre={getGenre(props.genreId)} />
+                    <Tag color={getColor(props.vote_average)} genre={getGenre(props.genreIds[0])} />
                     <ShowLabelTitle>{props.title}</ShowLabelTitle>
                     <ShowCalification>{props.vote_average}</ShowCalification>
                 </ShowTitle>
