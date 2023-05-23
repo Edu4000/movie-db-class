@@ -4,7 +4,7 @@ import { CardsProps } from 'components/card/types';
 import React, { useEffect } from 'react'
 import { getNowPlaying, getPopular } from 'services';
 
-const About = () => {
+const NowPlaying = () => {
   const [movies, setMovies] = React.useState<Array<CardsProps>>([]);
 
   function movieList(data: any): Array<CardsProps> {
@@ -47,4 +47,4 @@ const About = () => {
   )
 }
 
-export default About
+export default NowPlaying

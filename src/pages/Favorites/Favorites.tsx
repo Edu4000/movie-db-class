@@ -4,7 +4,7 @@ import { CardsProps } from 'components/card/types';
 import React, { useEffect } from 'react'
 import { getMovieInfo } from 'services';
 
-const Login = () => {
+const Favorites = () => {
   const [movies, setMovies] = React.useState<Array<CardsProps>>([]);
 
   function movieList(data: any) {
@@ -39,7 +39,7 @@ const Login = () => {
       <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2, mx: 1 }}>
         <Typography variant="h3" fontWeight="bold" component="div" sx={{ flexGrow: 1 }}>My Favorites</Typography>
       </Box>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ }}>
         {movies.length === 0 ?
           <Box sx={{ width: '100%', height: '125px', pt: '120px' }}>
             <Typography>
@@ -55,4 +55,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Favorites

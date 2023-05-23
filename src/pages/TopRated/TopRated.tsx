@@ -4,7 +4,7 @@ import { CardsProps } from 'components/card/types';
 import React, { useEffect } from 'react'
 import { getTopRated } from 'services';
 
-const Series = () => {const [movies, setMovies] = React.useState<Array<CardsProps>>([]);
+const TopRated = () => {const [movies, setMovies] = React.useState<Array<CardsProps>>([]);
 
   function movieList(data: any): Array<CardsProps> {
     let res = data.map((movie: any) => {
@@ -32,7 +32,7 @@ const Series = () => {const [movies, setMovies] = React.useState<Array<CardsProp
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2, mx: 1 }}>
-        <Typography variant="h3" fontWeight="bold" component="div" sx={{ flexGrow: 1 }}>Now Playing</Typography>
+        <Typography variant="h3" fontWeight="bold" component="div" sx={{ flexGrow: 1 }}>Top Rated</Typography>
       </Box>
       {movies.length === 0 ?
         <Box sx={{ width: '100%', height: '125px', pt: '120px' }}>
@@ -46,4 +46,4 @@ const Series = () => {const [movies, setMovies] = React.useState<Array<CardsProp
   )
 }
 
-export default Series
+export default TopRated
